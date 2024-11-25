@@ -1,36 +1,73 @@
-version: "3.1"
+# version: "3.2"
 
 services:
   mongo1:
     image: mongo
-    restart: no
+    # restart: no
     container_name: mongo1
     ports:
       - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+    restart: always
+    command: mongod --replSet my-mongo-set
     volumes:
       - ./db_data1/:/data/db/
+
   mongo2:
     image: mongo
-    restart: no
+    # restart: no
     container_name: mongo2
     ports:
       - 27018:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+    restart: always
+    command: mongod --replSet my-mongo-set
     volumes:
       - ./db_data2/:/data/db/
+
   mongo3:
     image: mongo
-    restart: no
+    # restart: no
     container_name: mongo3
     ports:
       - 27019:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+    restart: always
+    command: mongod --replSet my-mongo-set
     volumes:
       - ./db_data3/:/data/db/
+
+# finally, we can define the initialization server
+# this runs the `rs.initiate` command to intialize
+# the replica set and connect the three servers to each other
+#   mongoinit:
+#     image: mongo
+#     container_name: mongoinit
+#     # this container will exit after executing the command
+#     restart: "no"
+#     networks:
+#       - mongo-network
+#     depends_on:
+#       - mongo1
+#       - mongo2
+#       - mongo3
+#     command: >
+#       mongosh --host localhost:27017 --eval 
+#       '
+#       db = (new Mongo("localhost:27017")).getDB("test");
+#       config = {
+#       "_id" : "my-mongo-set",
+#       "members" : [
+#         {
+#           "_id" : 0,
+#           "host" : "locakhost:27017"
+#         },
+#         {
+#           "_id" : 1,
+#           "host" : "localhost:27017"
+#         },
+#         {
+#           "_id" : 2,
+#           "host" : "localhost:27017"
+#         }
+#       ]
+#       };
+#       rs.initiate(config);
+#       '      
