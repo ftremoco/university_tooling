@@ -8,14 +8,13 @@ import json
 
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+        print("Connected to MQTT with result code "+str(rc))
 
 client = mqtt.Client()
 client.on_connect = on_connect
 client.connect('broker.mqttdashboard.com', 1883)
 
 clientMongo=MongoClient(username='admin',password='admin',authSource='admin')
-print("MongoDB Connection Successful")
 mydb = clientMongo["usamovies"]
 colmovies = mydb["movies"]
 
