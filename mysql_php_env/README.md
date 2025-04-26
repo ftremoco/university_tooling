@@ -1,0 +1,1 @@
+Adapted from: https://enlear.academy/stop-using-xampp-a-step-by-step-guide-to-docker-for-php-and-mysql-b424f0a7ba41
