@@ -1,6 +1,6 @@
 <?php
 $username = "root"; // Replace with your MySQL username
-$password = "password"; // Replace with your MySQL password
+$password = "root"; // Replace with your MySQL password
 $dbname = "jobseekers";
 $servername = "mysql_db";  // Use the hostname set in the docker-compose.yml
 $port = 3306;  // MySQL port number

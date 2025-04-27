@@ -1,6 +1,6 @@
 <?php
 $username = "root"; 
-$password = "password"; 
+$password = "root"; 
 $dbname = "jobseekers";
 $servername = "mysql_db";  
 $port = 3306;  
