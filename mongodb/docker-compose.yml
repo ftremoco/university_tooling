@@ -1,12 +1,13 @@
 services:
   mongo:
-    image: mongo
-    restart: no
+    # Pin to MongoDB 7 because MongoDB 8+ can fail to start on some macOS Docker Desktop hosts.
+    image: mongo:7
+    restart: always
     container_name: mongo
     ports:
       - 27017:27017
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: admin
-    #   MONGO_INITDB_ROOT_PASSWORD: admin
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
     volumes:
       - ./db_data/:/data/
